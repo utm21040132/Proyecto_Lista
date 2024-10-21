@@ -2,11 +2,7 @@ import { Schema,model } from "mongoose";
 
 const GradesSchema = new Schema([
     {
-        user: {
-            type: Schema.Types.ObjectId,
-            required: true
-        },
-        event: {
+        groupID: {
             type: Schema.Types.ObjectId,
             required: true
         },
@@ -14,9 +10,13 @@ const GradesSchema = new Schema([
             type: Number,
             required: true
         },
+        eventID: {
+            type: Schema.Types.ObjectId,
+            required: true
+        },
         grades: [
             {
-                metric: {
+                metricID: {
                     type: Schema.Types.ObjectId,
                     required: true
                 },

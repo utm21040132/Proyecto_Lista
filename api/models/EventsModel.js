@@ -27,9 +27,19 @@ const EventSchema = new Schema([
             require:true
         },
     },{
-        groups:[]
+        groups:[
+            {
+                type:Schema.Types.ObjectId,
+                required: true
+            }
+        ]
     },{
-        judges:[]
+        judges:[
+            {
+                type:Schema.Types.ObjectId,
+                required: true
+            }
+        ]
     }
 ]);
 

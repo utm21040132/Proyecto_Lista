@@ -12,6 +12,10 @@ const GroupSchema = new Schema([
         }
         ]
     },{
+        leader:{
+            type:Schema.Types.ObjectId
+        }
+    },{
         round: {
             type: Number,
             required: true
