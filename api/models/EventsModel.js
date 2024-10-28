@@ -2,42 +2,53 @@ import {Schema, model} from "mongoose"
 
 const EventSchema = new Schema([
     {
+        name:{
+            type:String,
+            required:true
+        }
+    },
+    {
         metrics: [
             {
                 description:{
                     type:String,
-                    require:true
+                    required:true
                 },
                 max_points:{
                     type:Number,
-                    require:true
+                    required:true
                 }
             }
         ]
     },{
         round:{
             type:Number,
-            require:true
+            default:0
+        }
+    },{
+        maxRound:{
+            type:Number,
+            required:true
         }
     },{
         status:{
             type:String,
             enum:["pending","active","done"],
             lowecase:true,
-            require:true
+            default:"pending"
         },
     },{
         groups:[
             {
-                type:Schema.Types.ObjectId,
-                required: true
+               // type:Schema.Types.ObjectId,
+                // required: true
             }
         ]
     },{
         judges:[
             {
-                type:Schema.Types.ObjectId,
-                required: true
+               // type:Schema.Types.ObjectId,
+               // required: true
             }
         ]
     }

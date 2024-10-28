@@ -14,15 +14,19 @@ const GradesSchema = new Schema([
             type: Schema.Types.ObjectId,
             required: true
         },
-        grades: [
+        grade: [
             {
-                metricID: {
+                metricID:{
                     type: Schema.Types.ObjectId,
                     required: true
                 },
-                score: {
+                grade:{
                     type: Number,
                     required: true
+                },
+                judgeID:{
+                     type: Schema.Types.ObjectId,
+                     required: true
                 }
             }
         ]

@@ -4,11 +4,11 @@ const GroupSchema = new Schema([
     {
         name:{
             type:String,
-            require:true   
+            required:true   
         }
     },{
-        participants:[{
-            type:Schema.Types.ObjectId,
+        participantsID:[{
+            //type:Schema.Types.ObjectId,
         }
         ]
     },{
@@ -18,13 +18,11 @@ const GroupSchema = new Schema([
     },{
         round: {
             type: Number,
-            required: true
+            default:0
         }
     },{
         grades: [
-            {
-                type: Schema.Types.ObjectId,
-            }
+               // type: Schema.Types.ObjectId,
         ]
     }
 ])
