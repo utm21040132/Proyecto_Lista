@@ -10,15 +10,15 @@ export const  register = async(req,res)=>{
         
 
         try {
-            const hash = await bcrypt.hash(req.body.password)
+            const hash = await bcrypt.hash(req.body.password, 10)
             const user = {
     
                 
                 name:req.body.name,
-                password:hash,
                 email:req.body.email,
                 curp:req.body.curp,
-                rol:req.body.rol
+                rol:req.body.rol,
+                password:hash
             };
             await UserModel.create(user);
             res.status(200).json({msg:"usuario registrado con exito"});

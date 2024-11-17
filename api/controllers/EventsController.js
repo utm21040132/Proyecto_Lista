@@ -27,10 +27,54 @@ export const createEvent = async(req,res)=>{
                 maxRound: req.body.maxRound
             }
 
-            await EventModel.createa(event);
+            await EventModel.create(event);
             return res.status(200).json({msg:"Evento registrado"})
         } catch (error) {
             console.log(error);
             return res.status(500).json({msg:"Evento no registrado, algo malio sal"})
         }
     }
+
+
+export const changeStatus = async(req,res)=> {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+export const changeRound = async(req, res)=>{
+    try {
+        const idEvent = req.params.id;
+        const event = await EventModel.findById(idEvent);
+        if (!event) {
+            return res.status(400).json({msg:"Evento no encontrado"})
+        }
+        const teamsPerRound = req.query.maxTeams ? req.query.maxTeams : 5;
+        //Traer las calificaciones por grupo
+        const {groups} = event;
+        for (const group of groups) {
+            const {grades} = await GradesModel.findById({idEvent: event._id, idGroup: event._id});
+            //Calificar por metrica
+            const alreadyCheked = [];
+            for (const grade of grades) {
+                const filteredGrades = grades.filter(item=>{grade.idMetric === item.idMetric && !alreadyCheked.includes(grade.idMetric)});
+                console.log(filteredGrades);
+                let gradePerMetric = 0 ;
+                if (filteredGrades.length > 0) {
+                    const gradePerMetric = filteredGrades.reduce((a,b)=>{a.grade = b.grade});    
+                }
+                
+                if (!alreadyCheked.includes(grade.idMetric)) {
+                    alreadyCheked.push(filteredGrades[0].idMetric)
+                
+                }
+                
+                console.log(gradePerMetric);   
+            }
+        } 
+    } catch (error) {
+        return res.status(500).json({msg:"Error al cambiar la ronda"})
+    }
+}
