@@ -6,30 +6,9 @@ import { UserModel } from "../models/UsersModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-export const  register = async(req,res)=>{
-        
 
-        try {
-            const hash = await bcrypt.hash(req.body.password, 10)
-            const user = {
-    
-                
-                name:req.body.name,
-                email:req.body.email,
-                curp:req.body.curp,
-                rol:req.body.rol,
-                password:hash
-            };
-            await UserModel.create(user);
-            res.status(200).json({msg:"usuario registrado con exito"});
-
-        } catch (error) {
-            res.status(500).json({msg:"Ocurrio un error al registrarte"});
-            console.log(error)
-        }
-    }
-    
-    export const login = async (req, res) => {
+export default{
+    login : async (req, res) => {
         // Implementar la lógica para iniciar sesión
         try {
             const email = req.body.email;
@@ -49,17 +28,15 @@ export const  register = async(req,res)=>{
         }
     
         // Creacion de JSON web token
-        const token = await jwt.sign(user, process.env.PRIVATE_KEY)
+        const token = await jwt.sign(JSON.stringify(user), process.env.PRIVATE_KEY)
         return res.status(202).json({ token });
         } catch(err) {
             console.error(err);
             return res.status(500).json({ error: "Error al iniciar sesión" });
         }
     
-    }
-    
-    // Actualizar perfil
-    export const updateProfile = async (req, res) => {
+    },
+    updateProfile : async (req, res) => {
         try {
             const user = await UserModel.findById(req.params._id); 
             if (!user) {
@@ -86,4 +63,31 @@ export const  register = async(req,res)=>{
             console.error(err);
             return res.status(500).json({ error: "Error al actualizar el usuario", details: err.message });
         }
-    };
+}
+}
+
+export const  register = async(req,res)=>{
+        
+
+        try {
+            const hash = await bcrypt.hash(req.body.password, 10)
+            const user = {
+    
+                
+                name:req.body.name,
+                email:req.body.email,
+                curp:req.body.curp,
+                rol:req.body.rol,
+                password:hash
+            };
+            await UserModel.create(user);
+            res.status(200).json({msg:"usuario registrado con exito"});
+
+        } catch (error) {
+            res.status(500).json({msg:"Ocurrio un error al registrarte"});
+            console.log(error)
+        }
+    }
+    
+    
+  

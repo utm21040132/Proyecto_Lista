@@ -1,6 +1,8 @@
 import { EventModel } from "../models/EventsModel.js";
 
-export const createEvent = async(req,res)=>{
+
+export default{
+    createEvent : async(req,res)=>{
         try {
 
             //Validar que metricas es un arrglo
@@ -34,7 +36,7 @@ export const createEvent = async(req,res)=>{
             return res.status(500).json({msg:"Evento no registrado, algo malio sal"})
         }
     }
-
+}
 
 export const changeStatus = async(req,res)=> {
     try {
