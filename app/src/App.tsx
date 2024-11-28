@@ -7,6 +7,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { RegisterPartcipant } from './participants/RegisterParticipant';
+import { CreateEvent } from './admins/CreateEvent';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/recover-password",
-    element: <Login/>,
+    element: <CreateEvent/>,
   },
 ]);
 

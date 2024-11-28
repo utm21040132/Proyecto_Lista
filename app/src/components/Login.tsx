@@ -51,7 +51,7 @@ export const Login = () =>{
                     </Row>
                     <Row>
                         <Col>
-                            Olvidaste tu contraseña? Recuperala <a href="">aqui</a>
+                            Olvidaste tu contraseña? Recuperala <a href="/recover-password">aqui</a>
                         </Col>
                         <Col>
                             Aun no tienes cuenta? Resgistrate <a href="/register">aqui</a>
