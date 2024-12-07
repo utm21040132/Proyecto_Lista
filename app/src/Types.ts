@@ -1,42 +1,41 @@
+//Revisar como funciona este codigo (reminder)
+
+interface IGrade {
+  id_metric: string;
+  grade: number;
+  id_judge: string;
+}
+export interface IGrades {
+  id_group: string;
+  round: number;
+  id_event: string;
+  grades: IGrade[]
+}
+
+export interface IGroup {
+  name: string;
+  id_members: string[];
+  leader: string;
+  round: number;
+  grades: IGrades[]
+}
+
+
+export interface IUser {
+  name: string;
+  email: string;
+  CURP: string;
+  password: string;
+  rol: string;
+}
+
 export interface IMetric {
   description: string;
   max_points: number;
 }
 
-//Revisar como funciona este codigo (reminder)
-
 export interface IEvent {
-  title: string;
+  name: string;
   maxRound: number;
   metrics: IMetric[];
-}
-
-export interface IUser {
-  name: String;
-  email: String;
-  CURP: String;
-  password: String;
-  rol: String;
-}
-
-
-export interface IGrade {
-  metricID:String;
-  grade:number;
-  judgeID:String;
-}
-
-export interface IGrades {
-  groupID:String;
-  round:number;
-  eventID:String;
-  grade:IGrade[];
-}
-
-export interface IGroup {
-  name: String;
-  participantsID: String[];
-  leader: String;
-  round: number;
-  grades: IGrades[];
 }

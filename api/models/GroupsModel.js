@@ -10,7 +10,8 @@ const GroupSchema = new Schema([
         id_members:[]
     },{
         leader:{
-            type:Schema.Types.ObjectId
+            type:String,
+            required:true
         }
     },{
         round: {
@@ -18,9 +19,7 @@ const GroupSchema = new Schema([
             default:0
         }
     },{
-        grades: [
-               // type: Schema.Types.ObjectId,
-        ]
+        grades: []
     }
 ])
 

@@ -1,8 +1,9 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { Trash } from "react-bootstrap-icons";
-import { IEvent, IMetric } from "../Types";
-
+import Swal from "sweetalert2";
+import { IEvent } from "../Types";
 
 export const CreateEvent = () => {
   const emptyMetric = {
@@ -10,23 +11,27 @@ export const CreateEvent = () => {
     max_points: 0,
   };
   const [event, setEvent] = useState<IEvent>({
-    title: "",
+    name: "",
     maxRound: 0,
     metrics: [emptyMetric],
   });
 
-  const onChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
-    e.preventDefault;
-    const data:any = event;
+  const onChangeBasicFields = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const data: any = event;
     data[e.target.name] = e.target.value;
-    setEvent({...data})
-  }
+    setEvent({ ...data });
+  };
 
-  const onChangeMetric = (e:React.ChangeEvent<HTMLInputElement>,i:number)=>{
-    e.preventDefault
-    const data:any = event;
-
-  }
+  const onChangeMetric = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    i: number
+  ) => {
+    e.preventDefault();
+    const data: any = event;
+    data.metrics[i][e.target.name] = e.target.value;
+    setEvent({ ...data });
+  };
 
   const addMetric = () => {
     const data = event;
@@ -41,13 +46,17 @@ export const CreateEvent = () => {
     setEvent({ ...data });
   };
 
-  const onSubmit = async ()=>{
+  const onSubmit = async () => {
     try {
-        
+      Swal.fire("Guardando evento...");
+      Swal.showLoading();
+      await axios.post("http://localhost:4000/event/create", event);
+      Swal.fire("Evento registrado con exito", "", "success");
     } catch (error) {
-        
+      console.log(error);
+      Swal.fire("Ocurrio un error", "", "error");
     }
-  }
+  };
   return (
     <Container>
       <Card className="m-3">
@@ -58,13 +67,17 @@ export const CreateEvent = () => {
               <Col>
                 <Form.Group>
                   <Form.Label>Titulo del evento</Form.Label>
-                  <Form.Control name="title" />
+                  <Form.Control onChange={onChangeBasicFields} name="title" />
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group>
                   <Form.Label>Numero de rondas</Form.Label>
-                  <Form.Control name="maxRound" type="number" />
+                  <Form.Control
+                    onChange={onChangeBasicFields}
+                    name="maxRound"
+                    type="number"
+                  />
                 </Form.Group>
               </Col>
             </Row>
@@ -72,19 +85,30 @@ export const CreateEvent = () => {
               <Form.Group className="text-center">
                 <Form.Label>Metricas:</Form.Label>
                 {event.metrics.map((metric, i) => (
-                  <Row className="mb-3">
+                  <Row className="mb-3" key={i}>
                     <Col>
                       <Form.Label>Descripción:</Form.Label>
-                      <Form.Control onChange={(e:any)=>onChangeMetric} name="description" />
+                      <Form.Control
+                        value={metric.description}
+                        onChange={(e: any) => onChangeMetric(e, i)}
+                        name="description"
+                      />
                     </Col>
                     <Col>
                       <Form.Label>Calificación maxima:</Form.Label>
-                      <Form.Control type="number" name="max_points" />
+                      <Form.Control
+                        value={metric.max_points}
+                        onChange={(e: any) => onChangeMetric(e, i)}
+                        type="number"
+                        name="max_points"
+                      />
                     </Col>
-                    {
-                    event.metrics.length > 1 && (
-                      <Col>
-                        <Button variant="danger">
+                    {event.metrics.length > 1 && (
+                      <Col xs={1}>
+                        <Button
+                          onClick={() => removeMetric(i)}
+                          variant="danger"
+                        >
                           <Trash />
                         </Button>
                       </Col>
@@ -100,7 +124,7 @@ export const CreateEvent = () => {
             </Row>
             <hr></hr>
             <div className="text-center">
-              <Button onClick={()=>onSubmit()}>Guardar evento</Button>
+              <Button onClick={() => onSubmit()}>Guardar evento</Button>
             </div>
           </Form>
         </Card.Body>

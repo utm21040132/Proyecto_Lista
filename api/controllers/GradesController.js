@@ -1,6 +1,6 @@
 import { EventModel } from "../models/EventsModel";
 import { GradesModel } from "../models/GradesModel";
-import { GroupModel } from "../models/GroupsModel";
+import { GroupsModel } from "../models/GroupsModel";
 
 //Crear calificaciones 
 //Devolverlas
@@ -9,7 +9,7 @@ export default {
     createGrade: async (req,res) => {
         try {
             const idGroup = req.params.idGroup;
-            const group = await GradesModel.findById(idGroup);
+            const group = await GroupsModel.findById(idGroup);
             if (!group) {
                 return res.status(400).json({msg:"Grupo no encontrado"})
             }

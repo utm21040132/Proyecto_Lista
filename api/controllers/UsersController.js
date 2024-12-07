@@ -13,7 +13,7 @@ export default {
       const user = {
         name: req.body.name,
         email: req.body.email,
-        curp: req.body.curp,
+        CURP: req.body.CURP,
         rol: req.body.rol,
         password: hash,
       };
@@ -72,4 +72,14 @@ export default {
       return res.status(500).json({msg:"Ocurrior un error al actualizar tu perfil "});
     }
   },
+  getUsers: async(req, res)=> {
+    try {
+      const users = await UserModel.find();
+      return res.status(200).json(users)
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({msg: "Ocurrio un error al obtener los usuarios"})
+      
+    }
+  }
 };

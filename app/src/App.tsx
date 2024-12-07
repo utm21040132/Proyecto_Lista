@@ -33,6 +33,10 @@ const router = createBrowserRouter([
     element: <ListEvents/>
   },
   {
+    path: "/create-event",
+    element: <CreateEvent  />,
+  },
+  {
     path: "/register",
     element: <RegisterPartcipant/>,
   },

@@ -14,7 +14,7 @@ export const RegisterPartcipant = () =>{
         rol:"participant"
     });
 
-    const onChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>)=>{
         e.preventDefault()
         const tempoData:any = data;
         tempoData[e.target.name] = e.target.value;
@@ -26,13 +26,10 @@ export const RegisterPartcipant = () =>{
             
             Swal.fire("Guardando Datos")
             Swal.showLoading();
-            if (data) {
-                data["rol"]= "participant"
-            }
             await axios.post("http://localhost:4000/user/register", data);
             Swal.fire("Datos validados con exito", "", "success");
         } catch (error:any) {
-            Swal.fire("Algo salio mal", (error as AxiosError).message, "error");
+            Swal.fire("Algo salio mal", error.response.data.msg , "error");
         }
     }
 
