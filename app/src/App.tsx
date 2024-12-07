@@ -10,6 +10,7 @@ import { Dashboard } from './admins/Dashboard';
 import { ListUsers } from './admins/ListUsers';
 import { ListGroup } from './admins/ListGroup';
 import { ListEvents } from './admins/ListEvents';
+import { CreateGroups } from './participants/CreateGroups';
 
 
 const router = createBrowserRouter([
@@ -42,7 +43,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/recover-password",
-    element: <CreateEvent/>,
+    element: <CreateGroups/>,
   },
 ]);
 
