@@ -1,12 +1,13 @@
 import axios, { AxiosError } from "axios";
 import { useState } from "react"
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap"
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 
 export const Login = () =>{
     const [data, setData] = useState({});
-
+    const navigate = useNavigate();
     const onChange = (e:any)=>{
         e.preventDefault()
         const tempoData:any = data;
@@ -20,7 +21,7 @@ export const Login = () =>{
             Swal.fire("Guardando Datos")
             Swal.showLoading();
             await axios.post("http://localhost:4000/user/login", data);
-            Swal.fire("Datos validados con exito", "", "success");
+            Swal.fire("Datos validados con exito", "", "success").then(()=>navigate("/home"));
         } catch (error:any) {
             Swal.fire("Algo salio mal", (error as AxiosError).message, "error");
         }

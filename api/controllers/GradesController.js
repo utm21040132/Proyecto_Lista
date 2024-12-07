@@ -1,5 +1,6 @@
 import { EventModel } from "../models/EventsModel";
 import { GradesModel } from "../models/GradesModel";
+import { GroupModel } from "../models/GroupsModel";
 
 //Crear calificaciones 
 //Devolverlas
@@ -7,38 +8,36 @@ import { GradesModel } from "../models/GradesModel";
 export default {
     createGrade: async (req,res) => {
         try {
-            const groupID = req.params.groupID;
-            const group = await GradesModel.findById(groupID);
+            const idGroup = req.params.idGroup;
+            const group = await GradesModel.findById(idGroup);
             if (!group) {
-                return res.status.json({msg:"Grupo no encontrado"})
-
+                return res.status(400).json({msg:"Grupo no encontrado"})
             }
             
             const round = req.body.round;
-
             if (!round) {
-                return res.status.json({msg:"La ronda no es valida"})
+                return res.status(400).json({msg:"La ronda no es valida"})
             }
 
-            const eventID = req.params.eventID;
-            const event = await EventModel.findById(eventID);
+            const idEvent = req.params.idEvent;
+            const event = await EventModel.findById(idEvent);
             if (!event) {
-                return res.status.json({msg:"Evento no encontrado"})
+                return res.status(400).json({msg:"Evento no encontrado"})
+            }
+            //Validar que el equipo si este registrado al evento
+            if (!event.groups.includes(group._id)) {
+                return res.status(400).json({msg:"No esta el grupo en este evento"})
             }
 
-            if (!event.groups.includes(groupID)) {
-                return res.status.json({msg:"No esta el grupo en este evento"})
-            }
-
-            //Validar que la ronda no tenga calificacion
+            
             //Filtro para traer las calificaciones de este evento
-            const gradesFromBd = await GradesModel.findOne({eventID:event._id, round:round, groupID:group._id});
-            gradesFromBd.grades.filter((grade)=>{
-                grade.judgeID == req.body.judgeID;
+            const gradesFromDb = await GradesModel.findOne({ id_event: event._id, round: round, id_group: group._id });
+            gradesFromDb.grades.filter((grade) => {
+                grade.id_judge == req.body.id_judge
             })
 
             //Calificacioes
-            const grades = req.body.grades;
+            const grade = req.body.grade;
 
 
         } catch (error) {

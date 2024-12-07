@@ -2,6 +2,22 @@ import { EventModel } from "../models/EventsModel.js";
 
 
 export default{
+    //Validar los datos de los eventos
+
+    validateEvent: async(metrics, name, max_round)=>{
+        try {
+            //Se crean datos para validar los errores
+            const data = { isValid: false, msg: "" };
+            
+            //Validamos que la metrica no este vacia
+            if (!Array.isArray(metrics) || metrics.length === 0) {
+                
+            }
+
+        } catch (error) {
+            
+        }
+    },
     createEvent : async(req,res)=>{
         try {
 

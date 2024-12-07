@@ -1,5 +1,6 @@
 
 import { GroupModel } from "../models/GroupsModel.js";
+import { EventModel } from "../models/EventsModel.js";
 
 export default{
     createGroup: async(res,req)=>{
@@ -8,8 +9,8 @@ export default{
             
             const group = {
                 name: req.body.name,
-                participantsID:req.body.participantsID,
-                leader: req.body.leader
+                id_members:req.body.id_members,
+                leader: req.body.id_leader
             }
             await GroupModel.create(group);
             return res.status(200).json({msg:"Se ha creado con exito"})
@@ -22,12 +23,6 @@ export default{
 
     },
     registerEvent: async (res,req)=>{
-
-        const idEvent = req.params.id;
-        const event = await EventModel.findById(idEvent);
-        if (!event) {
-            return res.status(400).json({message: "El evento no existe"})
-        }
         
         try {
             const idGroup = req.params.id;
@@ -44,14 +39,14 @@ export default{
             //Registrar evento
             await EventsModel.findByIdAndUpdate(idEvent,{
                 $push:{
-                    "groups":idEvent
+                    "groups":idGroup
                 }
             })
 
             return res.status(200).json({msg:"El equipo se inscribio con exito"})
         } catch (error) {
             console.log(error);
-            return res.status(500).json({msg:"Ha ocurrido un error"})
+            return res.status(500).json({msg:"Ha ocurrido un error al registrar el equipo"})
         }
     }
 }

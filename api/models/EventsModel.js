@@ -38,19 +38,9 @@ const EventSchema = new Schema([
             default:"pending"
         },
     },{
-        groups:[
-            {
-               // type:Schema.Types.ObjectId,
-                // required: true
-            }
-        ]
+        groups:[]
     },{
-        judges:[
-            {
-               // type:Schema.Types.ObjectId,
-               // required: true
-            }
-        ]
+        judges:[]
     }
 ]);
 

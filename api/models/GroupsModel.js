@@ -7,10 +7,7 @@ const GroupSchema = new Schema([
             required:true   
         }
     },{
-        participantsID:[{
-            //type:Schema.Types.ObjectId,
-        }
-        ]
+        id_members:[]
     },{
         leader:{
             type:Schema.Types.ObjectId
